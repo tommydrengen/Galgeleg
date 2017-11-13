@@ -18,17 +18,6 @@ public class Galgelogik {
   private boolean sidsteBogstavVarKorrekt;
   private boolean spilletErVundet;
   private boolean spilletErTabt;
-  private HighScore highScore;
-
-
-  public HighScore getHighScore() {
-        return highScore;
-    }
-
-    public void setHighScore(HighScore highScore) {
-        this.highScore = highScore;
-    }
-
 
 
   public ArrayList<String> getBrugteBogstaver() {
@@ -56,6 +45,7 @@ public class Galgelogik {
   }
 
   public boolean erSpilletTabt() {
+
     return spilletErTabt;
   }
 
@@ -65,6 +55,7 @@ public class Galgelogik {
 
 
   public Galgelogik() {
+
     muligeOrd.add("bil");
     muligeOrd.add("computer");
     muligeOrd.add("programmering");
@@ -164,5 +155,10 @@ public class Galgelogik {
 
     System.out.println("muligeOrd = " + muligeOrd);
     nulstil();
+  }
+
+  public void  onDestroy(){
+
+
   }
 }
