@@ -15,7 +15,6 @@ public class Point implements Serializable {
         this.navn = navn;
         this.score=score;
         navn++;
-
     }
     void setPoint(Point p, Galgelogik gl){
         p.score = gl.getOrdet().length()-gl.getAntalForkerteBogstaver();
