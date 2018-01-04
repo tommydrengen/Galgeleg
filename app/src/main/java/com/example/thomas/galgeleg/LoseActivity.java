@@ -12,8 +12,6 @@ import android.widget.ListView;
 
 public class LoseActivity extends AppCompatActivity {
 
-    public static HighScore highscore = new HighScore();
-
     ListView lv;
     LayoutInflater li;
     BaseAdapter ba;

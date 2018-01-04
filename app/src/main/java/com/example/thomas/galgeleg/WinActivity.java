@@ -22,6 +22,9 @@ public class WinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_win);
 
+        ////li = (LayoutInflater) getSystemService(Context.class.getClass().getField( Point p);
+        //li = R.layout.highscore;
+        //li =(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         sp = PreferenceManager.getDefaultSharedPreferences(this);
         editor = sp.edit();
         String s=sp.getString("Du har vundet","tillykke");

@@ -16,35 +16,44 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class HighScore extends AppCompatActivity implements OnItemClickListener, Serializable{
     static final String TAG ="" ;
     //inspireret af Jacobs BenytListView
     ListView listView;
-    final Point[]  score = new Point[10];
+    /*final*/ Point[]  score = new Point[10];
    // JSONArray js;
     int spillernr = 1;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
     ArrayAdapter<String> aa;
+    String hs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         sp = PreferenceManager.getDefaultSharedPreferences(this);
         editor = sp.edit();
+        editor.putString(String.valueOf(R.id.highScoreListe), listView.toString());
         String s=sp.getString("Du har vundet","tillykke");
         listView = (ListView) findViewById(R.id.highScoreListe);
         aa.add(sp.toString());
 
 
+        hs = score.toString();
 
+        listView = (ListView) editor.putString("score", this.hPoint());
+        //listView.set = (ListView) this.hPoint()
 
-        listView = (ListView) editor.putString("score", sp.toString());
         //sp.edit().putString(("point",1+ hPoint());
 
-        listView = sp.getString("score", this.hPoint().toString();
+        String score= sp.getString("score", this.hPoint());
+
 
 
         Log.d(TAG, "onCreate: hPoint");
@@ -61,7 +70,7 @@ public class HighScore extends AppCompatActivity implements OnItemClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.highscore);
 
-        listView = (ListView) findViewById(R.id.highScoreListe);
+        listView =  findViewById(R.id.highScoreListe);
 
         System.out.println("oncreate");
 
@@ -74,17 +83,18 @@ public class HighScore extends AppCompatActivity implements OnItemClickListener,
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 View v = super.getView(position, convertView, parent);
 
+                ListView listView = v.findViewById(R.id.highScoreListe);
                 TextView point = v.findViewById(R.id.point);
                 point.setText("" + position);
                 TextView snavn = v.findViewById(R.id.spillernavn);
 
-                snavn.setText("hans");
-                snavn.setText("");
-                point.setText("");
+                snavn.setText(listView.toString());
+
 
                 return v;
             }
         };
+        Log.d(TAG, "getView: "+(listView.toString()));
 
         // listView = (ListView) findViewById(R.id.highScoreListe);
         System.out.println(adapter);
@@ -149,8 +159,9 @@ public class HighScore extends AppCompatActivity implements OnItemClickListener,
 
 
 
+
         // Writing "foo" to a stream (for example, a file)
-       /* try{
+        try{
 // Step 1. Create an output stream
 
 // that is, create bucket to receive the bytes
@@ -202,7 +213,7 @@ public class HighScore extends AppCompatActivity implements OnItemClickListener,
 
         }
 
-        catch (Exception e){e.printStackTrace();}*/
+        catch (Exception e){e.printStackTrace();}
 
     }
 

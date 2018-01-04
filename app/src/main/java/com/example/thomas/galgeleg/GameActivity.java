@@ -105,20 +105,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             if (gl.erSpilletVundet()) {
                 String slut="Du har vundet";
                 sp.edit().putString("vundet tekst", slut).apply();
-                Intent i= new Intent(this, HighScore.class);
+
+                Intent i= new Intent(this, WinActivity.class);
                 startActivity(i);
             }
             else{
                 String slut="Du har tabt";
                 sp.edit().putString("vundet tekst", slut).apply();
-                Intent i= new Intent(this, HighScore.class);
+                Intent i= new Intent(this, LoseActivity.class);
                 startActivity(i);
             }
-
-
-
-
-
     }
 }
 }
