@@ -26,12 +26,13 @@ import java.io.Serializable;
 
 public class HighScore extends AppCompatActivity implements OnItemClickListener, Serializable{
     static final String TAG ="" ;
-    ListView listView;
+    TextView tv;
+    ListView lv;
     /*final*/ Point[]  score = new Point[10];
    // JSONArray js;
     int spillernr = 1;
     SharedPreferences sp;
-    SharedPreferences.Editor editor;
+//    SharedPreferences.Editor editor;
     ArrayAdapter<String> aa;
     String hs;
 
@@ -51,28 +52,25 @@ public class HighScore extends AppCompatActivity implements OnItemClickListener,
             e.printStackTrace();
         }
         sp = PreferenceManager.getDefaultSharedPreferences(this);
-        editor = sp.edit();
-        editor.putString(String.valueOf(R.id.highScoreListe), listView.toString());
+     //   editor = sp.edit();
         String s=sp.getString("Du har vundet","tillykke");
-        listView = (ListView) findViewById(R.id.highScoreListe);
+        this.lv = (ListView) findViewById(R.id.highScoreListe);
         aa.add(sp.toString());
         hs = score.toString();
-        listView = (ListView) editor.putString("score", this.hPoint());
-        //listView.set = (ListView) this.hPoint()
+        //tv = (ListView) editor.putString("score", this.hPoint());
+        //tv.set = (ListView) this.hPoint()
 
         //sp.edit().putString(("point",1+ hPoint());
 
         String score= sp.getString("score", this.hPoint());
 
-        Log.d(TAG, "onCreate: hPoint");
 
 
 
-        editor.commit();
 
         setContentView(R.layout.highscore);
 
-        //listView =  findViewById(R.id.highScoreListe);
+        //tv =  findViewById(R.id.highScoreListe);
 
         System.out.println("oncreate");
 
@@ -96,12 +94,13 @@ public class HighScore extends AppCompatActivity implements OnItemClickListener,
                 return v;
             }
         };
-        Log.d(TAG, "getView: "+(listView.toString()));
+        Log.d(TAG, "getView: "+(this.tv.toString()));
 
-        // listView = (ListView) findViewById(R.id.highScoreListe);
+        // tv = (ListView) findViewById(R.id.highScoreListe);
         System.out.println(adapter);
-        listView.setOnItemClickListener(this);
-        listView.setAdapter(adapter);
+        //this.tv.setOnItemClickListener(this);
+        this.lv.setOnItemClickListener(this);
+        this.lv.setAdapter(adapter);
 
     }
 
@@ -156,6 +155,20 @@ public class HighScore extends AppCompatActivity implements OnItemClickListener,
         }
 
     }
+
+    @Override
+    protected void onDestroy() {
+        try{
+
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            tv.append("fejl");
+        }
+        super.onDestroy();
+    }
+
     //serialisér ArrayAdaptor adaptor
     public void set(ArrayAdapter adapter){
 
@@ -168,7 +181,7 @@ public class HighScore extends AppCompatActivity implements OnItemClickListener,
 
 // that is, create bucket to receive the bytes
 
-            FileOutputStream out = new FileOutputStream(getFilesDir()+"/hiscore.ser");
+            FileOutputStream out = new FileOutputStream(getFilesDir()+"/highscore.ser");
 
 // Step 2. Create ObjectOutputStream
 
