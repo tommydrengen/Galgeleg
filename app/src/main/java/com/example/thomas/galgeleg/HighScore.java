@@ -18,13 +18,14 @@ import android.widget.Toast;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class HighScore extends AppCompatActivity implements OnItemClickListener, Serializable{
     static final String TAG ="" ;
-    //inspireret af Jacobs BenytListView
     ListView listView;
     /*final*/ Point[]  score = new Point[10];
    // JSONArray js;
@@ -35,18 +36,27 @@ public class HighScore extends AppCompatActivity implements OnItemClickListener,
     String hs;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        TextView tv = new TextView(this);
 
+        try {
+            InputStream is = getResources().openRawResource(R.raw.hs);
+            byte b[] = new byte[is.available()];
+            is.read(b);
+            String str = new String(b, "UTF-8");
+            tv.append(str);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         sp = PreferenceManager.getDefaultSharedPreferences(this);
         editor = sp.edit();
         editor.putString(String.valueOf(R.id.highScoreListe), listView.toString());
         String s=sp.getString("Du har vundet","tillykke");
         listView = (ListView) findViewById(R.id.highScoreListe);
         aa.add(sp.toString());
-
-
         hs = score.toString();
-
         listView = (ListView) editor.putString("score", this.hPoint());
         //listView.set = (ListView) this.hPoint()
 
@@ -54,23 +64,15 @@ public class HighScore extends AppCompatActivity implements OnItemClickListener,
 
         String score= sp.getString("score", this.hPoint());
 
-
-
         Log.d(TAG, "onCreate: hPoint");
-
-
-
-
 
 
 
         editor.commit();
 
-
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.highscore);
 
-        listView =  findViewById(R.id.highScoreListe);
+        //listView =  findViewById(R.id.highScoreListe);
 
         System.out.println("oncreate");
 
@@ -83,8 +85,8 @@ public class HighScore extends AppCompatActivity implements OnItemClickListener,
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 View v = super.getView(position, convertView, parent);
 
-                ListView listView = v.findViewById(R.id.highScoreListe);
-                TextView point = v.findViewById(R.id.point);
+                ListView listView = (ListView) v.findViewById(R.id.highScoreListe);
+                TextView point = (TextView) v.findViewById(R.id.point);
                 point.setText("" + position);
                 TextView snavn = v.findViewById(R.id.spillernavn);
 
